@@ -161,9 +161,10 @@ def fetch_server_images(image_sources):
 		  Returns : None; fetches images hosted on same as well as external server
 	'''
 	external_index_mapping = {"http://web.mit.edu/torralba/www/allIndoors.jpg": " /torralba/www/allIndoors.jpg ",
-							  "http://places2.csail.mit.edu/imgs/demo/7.jpg": " /imgs/demo/7.jpg ",
-							  "http://humaneva.is.tue.mpg.de/assets/GUI_Screenshot.jpg": " /assets/GUI_Screenshot.jpg ",
-							  "http://labelme2.csail.mit.edu/Release3.0/browserTools/icons/labeling.jpg": " /Release3.0/browserTools/icons/labeling.jpg "}
+				  "http://places2.csail.mit.edu/imgs/demo/7.jpg": " /imgs/demo/7.jpg ",
+				  "http://humaneva.is.tue.mpg.de/assets/GUI_Screenshot.jpg": " /assets/GUI_Screenshot.jpg ",
+				  "http://labelme2.csail.mit.edu/Release3.0/browserTools/icons/labeling.jpg": " /Release3.0/browserTools/icons/labeling.jpg "}
+	
 	global TOTAL_DELAY, ABOVE_THE_FOLD_PLT;
 
 	for source in image_sources:
