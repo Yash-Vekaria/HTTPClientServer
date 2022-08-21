@@ -9,7 +9,6 @@ import os
 
 # Defining Global Parameters
 SERVER_IP = "173.230.149.18"
-# SERVER_IP = "127.0.0.1"
 SERVER_PORT = 23662
 REQUEST_HOST = "{}:{}".format(SERVER_IP, SERVER_PORT)
 INDEX = " / "
@@ -47,7 +46,6 @@ class SocketData:
 		version = "/1.1"
 		host_parameter = "Host: {}".format(host_address)
 		x_client_project = "X-Client-project: project-152A-part2"
-		# host_delay = "Host-delay: {}".format(SERVER_DELAY)
 		connection_header = "Connection: keep-alive"
 		keep_alive_header = "Keep-Alive: timeout=10, max=100"
 		termination_character = "\r\n\r\n"
@@ -109,7 +107,6 @@ class SocketData:
 		'''
 		Func: Closing the socket
 		'''
-		# self.socket.shutdown(1)
 		self.socket.close()
 		
 
@@ -128,7 +125,6 @@ def generate_and_download_image_from_response(response, img_filepath):
 	'''
 	# Computing response header part
 	pos = response.find(b"\r\n\r\n")
-	# print(response[:pos].decode('utf-8'))
 
 	# Skipping response header part and saving the image data
 	response = response[pos+4:]
@@ -172,7 +168,6 @@ def fetch_resources():
 
 	for source in image_sources:
 		start, end = 0, 0
-		# print(source)
 
 		if source.startswith("images/"):
 			# Fetching Same Server Images
@@ -217,7 +212,6 @@ def print_performance_stats():
 	print("\nHTTP Client Version: Persistent HTTP")
 	print("\nTotal PLT = {}".format(TOTAL_DELAY))
 	print("\nAverage Request Delay = {}".format(st.mean(REQUEST_DELAYS)))
-	# print("\nPage Load Time = {}".format(TOTAL_DELAY))
 	print("\nATF PLT = {}".format(ABOVE_THE_FOLD_PLT))
 	print("\nRPS = {}".format(round((339/float(sum(REQUEST_DELAYS[:]))),2)))
 	# print("\nRequest No. that took Maximum Time = {}".format(REQUEST_DELAYS.index(max(REQUEST_DELAYS)) + 1))
