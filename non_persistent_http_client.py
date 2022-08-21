@@ -23,7 +23,6 @@ If above 2 lines are implemented, all socket.close() can be removed with standar
 
 # Defining Global Parameters
 SERVER_IP = "173.230.149.18"
-# SERVER_IP = "127.0.0.1"
 SERVER_PORT = 23662
 REQUEST_HOST = "{}:{}".format(SERVER_IP, SERVER_PORT)
 INDEX = " / "
