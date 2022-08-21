@@ -49,7 +49,6 @@ class SocketData:
 	def __init__(self, SERVER_IP, SERVER_PORT):
 		self.socket = socket(AF_INET, SOCK_STREAM)
 		self.socket.connect((SERVER_IP, SERVER_PORT))
-		# self.socket.setblocking(0)
 
 	def send_request(self, host_address, index):
 		'''
@@ -63,10 +62,8 @@ class SocketData:
 		version = "/1.1"
 		host_parameter = "Host: {}".format(host_address)
 		x_client_project = "X-Client-project: project-152A-part2"
-		# host_delay = "Host-delay: {}".format(SERVER_DELAY)
 		termination_character = "\r\n\r\n"
 		request = method + index_character + protocol + version + separator + host_parameter + separator + x_client_project + termination_character
-		# print("Request Message: \"{}\" sent.".format(request))
 		self.socket.sendall(request.encode())		
 
 	def receive_response(self):
@@ -86,14 +83,12 @@ class SocketData:
 				chunk_size += len(chunk)
 				
 				if size == 10000000:
-					# print(chunk)
 					for header_name in chunk.split(b"\r\n"):
 						if (b"Content-Length: " in header_name) or (b"Content-length: " in header_name):
 							size = int(header_name.replace(b"Content-length: ",b"").replace(b"Content-Length: ",b"").decode())
 							print(size)	
 			except BaseException as e: 
 				#ConnectionResetError
-				# print(e)
 				pass
 		return message
 
@@ -126,7 +121,6 @@ class SocketData:
 		'''
 		Func: Closing the socket
 		'''
-		# self.socket.shutdown(1)
 		self.socket.close()
 		
 
@@ -145,7 +139,6 @@ def generate_and_download_image_from_response(response, img_filepath):
 	'''
 	# Computing response header part
 	pos = response.find(b"\r\n\r\n")
-	# print(response[:pos].decode('utf-8'))
 
 	# Skipping response header part and saving the image data
 	response = response[pos+4:]
@@ -169,7 +162,6 @@ def fetch_server_images(image_sources):
 
 	for source in image_sources:
 		start, end = 0, 0
-		# print(source)
 		
 		if source.startswith("images/"):\
 			# Fetching Same Server Images
@@ -202,7 +194,6 @@ def fetch_server_images(image_sources):
 			REQUEST_DELAYS.append(time_elapsed)
 
 			if "http://web.mit.edu/" in source:
-				# print("MIT", time_elapsed)
 				ABOVE_THE_FOLD_PLT += time_elapsed
 
 
@@ -216,7 +207,6 @@ def print_performance_stats():
 	print("\nHTTP Client Version: Non-Persistent HTTP")
 	print("\nTotal PLT = {}".format(TOTAL_DELAY))
 	print("\nAverage Request Delay = {}".format(st.mean(REQUEST_DELAYS)))
-	# print("\nPage Load Time = {}".format(TOTAL_DELAY))
 	print("\nATF PLT = {}".format(ABOVE_THE_FOLD_PLT))
 	print("\nRPS = {}".format(round((339/float(sum(REQUEST_DELAYS[:]))),2)))
 	# print("\nRequest No. that took Maximum Time = {}".format(REQUEST_DELAYS.index(max(REQUEST_DELAYS)) + 1))
@@ -240,6 +230,7 @@ def main():
 	response = sdata.receive_response()
 	end = time.time()
 	sdata.save_response_as_html_file(response)
+	
 	# Parsing ecs152a.html
 	image_indexes = sdata.parse_response_html(response)
 	sdata.close()
